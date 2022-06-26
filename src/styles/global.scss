@@ -8,9 +8,10 @@
   --background: #F2F6FF;
   --white: #FFFFFF;
 
-  --blue-50: #e9f0ff;
+  --blue-50: #dae6ff;
+  --blue-200: #8093AE;
   --blue-300: #31507D;
-  --blue-500: #5551FF;
+  --blue-500: #267FFF;
 }
 
 @media (max-width: 1080px) {
@@ -31,7 +32,7 @@ body {
 }
 
 body, input, button, textarea, select {
-  font: 400 1rem "Inter", sans-serif;
+  font: 400 1rem "Source Sans Pro", sans-serif;
 }
 
 button {
