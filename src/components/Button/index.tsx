@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
+import { Loader } from '../Loader'
 
 import styles from './styles.module.scss'
 
@@ -7,10 +8,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
 }
 
-export function Button({ children, ...rest }: ButtonProps) {
+export function Button({ isLoading, children, ...rest }: ButtonProps) {
   return (
     <button {...rest} className={styles.button}>
-      {children}
+      {isLoading ? <Loader size="small" /> : children}
     </button>
   )
 }
