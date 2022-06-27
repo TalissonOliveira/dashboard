@@ -1,0 +1,61 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  height: 3rem;
+  width: 22rem;
+
+  border: 1px solid var(--blue-50);
+  border-radius: 8px;
+
+  svg {
+    color: var(--blue-200);
+    margin-inline: 1rem;
+  }
+
+  input:valid + svg {
+    color: var(--blue-500);
+  }
+
+  input {
+    color: var(--blue-300);
+    font-size: 1.1rem;
+    letter-spacing: 0.03rem;
+  
+    width: 100%;
+    height: 100%;
+    padding-right: 1rem;
+  
+    border: none;
+    border-radius: 8px;
+  
+    outline: none;
+  
+    &::placeholder {
+      color: var(--blue-200);
+    }
+  }
+
+  & + .inputContainer {
+    margin-top: 1rem;
+  }
+
+  &:focus-within {
+    border: 1px solid var(--blue-500);
+  }
+
+  &.error {
+    border: 1px solid var(--red-500);
+
+    svg {
+      color: var(--red-500);
+    }
+  }
+}
+
+.errorMessage {
+  color: var(--red-500);
+  display: inline-block;
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+}
