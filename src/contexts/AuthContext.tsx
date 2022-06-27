@@ -16,6 +16,7 @@ interface SignInCredentials {
 interface AuthContextData {
   isAuthenticated: boolean
   user: User
+  loading: boolean
   signIn: (credentials: SignInCredentials) => Promise<void>
   signOut: () => void
 }
@@ -28,8 +29,14 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>()
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   const isAuthenticated = !!user
+
+  useEffect(() => {
+    console.log(isAuthenticated)
+  }, [isAuthenticated])
+  
 
   useEffect(() => {
     const recoveredUser = localStorage.getItem('dashboard:user')
@@ -37,6 +44,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (recoveredUser) {
       setUser(JSON.parse(recoveredUser))
     }
+
+    setLoading(false)
   }, [])
 
   async function signIn({ email, password }: SignInCredentials) {
@@ -78,7 +87,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       signIn,
       signOut,
       user,
-      isAuthenticated
+      isAuthenticated,
+      loading
     }}>
       {children}
     </AuthContext.Provider>
