@@ -7,6 +7,7 @@ import { Input } from '../../components/Input'
 import * as Yup from 'yup'
 
 import styles from './styles.module.scss'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 
 interface SignInFormData {
   email: string
@@ -19,6 +20,8 @@ const signInFormSchema = Yup.object({
 })
 
 export function Login() {
+  useDocumentTitle('Entrar')
+
   const { register, handleSubmit, formState: {
     isSubmitting,
     errors
