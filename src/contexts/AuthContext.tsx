@@ -15,8 +15,9 @@ interface SignInCredentials {
 
 interface AuthContextData {
   isAuthenticated: boolean
-  signIn: (credentials: SignInCredentials) => Promise<void>
   user: User
+  signIn: (credentials: SignInCredentials) => Promise<void>
+  signOut: () => void
 }
 
 interface AuthProviderProps {
@@ -64,9 +65,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  function signOut() {
+    localStorage.removeItem('dashboard:user')
+    localStorage.removeItem('dashboard:token')
+    setUser(null)
+
+    navigate('/')
+  }
+
   return (
     <AuthContext.Provider value={{
       signIn,
+      signOut,
       user,
       isAuthenticated
     }}>
