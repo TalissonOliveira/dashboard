@@ -1,13 +1,14 @@
 import { MdEmail, MdLock } from 'react-icons/md'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
+import { useAuthContext } from '../../hooks/useAuthContext'
 import { AuthLayout } from '../../layouts/AuthLayout'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import * as Yup from 'yup'
 
 import styles from './styles.module.scss'
-import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 
 interface SignInFormData {
   email: string
@@ -20,6 +21,7 @@ const signInFormSchema = Yup.object({
 })
 
 export function Login() {
+  const { signIn } = useAuthContext()
   useDocumentTitle('Entrar')
 
   const { register, handleSubmit, formState: {
@@ -30,8 +32,7 @@ export function Login() {
   })
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 750))
-    console.log(values)
+    await signIn(values)
   }
 
   return (
