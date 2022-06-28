@@ -7,6 +7,7 @@
 :root {
   --background: #F2F6FF;
   --white: #FFFFFF;
+  --white-50: #FAFCFE;
 
   --blue-50: #dae6ff;
   --blue-200: #8093AE;
@@ -29,7 +30,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--white-50);
   color: var(--blue-300);
 }
 

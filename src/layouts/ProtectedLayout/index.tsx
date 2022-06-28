@@ -1,3 +1,4 @@
+import { Header } from '../../components/Header'
 import { Loader } from '../../components/Loader'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { Login } from '../../pages/Login'
@@ -19,5 +20,10 @@ export function ProtectedLayout({ children }: { children: JSX.Element }) {
     return <Login />
   }
 
-  return children
+  return (
+    <>
+      <Header />
+      {children}
+    </>
+  )
 }
