@@ -38,7 +38,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-expressions": ["off"]
+    }
   },
   "browserslist": {
     "production": [

@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { api } from '../api'
 
-type InvoiceTypes = 'À Vencer' | 'Vencido' | 'Pago' | 'Fatura'
+type InvoiceTypes = 'Pendente' | 'Vencido' | 'Pago' | 'Fatura'
 
 interface Invoice {
   client: string
@@ -24,12 +24,10 @@ function formatDate(date: Date) {
   })
 }
 
-async function getInvoices(page: number) {
-    const { data, headers } = await api.get<GetInvoicesResponse>('/invoices', {
-      params: {
-        page,
-      }
-    })
+async function getInvoices(page: number, pageSize: number, cnpj: string) {
+    const { data, headers } = await api.get<GetInvoicesResponse>(
+      `/Faturas/cnpj/${cnpj}/${page}/${pageSize}`
+    )
 
     const totalCount = Number(headers['x-total-count'])
 
@@ -52,8 +50,8 @@ async function getInvoices(page: number) {
     }
 }
 
-export function useInvoices(page: number) {
-  return useQuery(['invoices', page], () => getInvoices(page), {
+export function useInvoices(page: number, pageSize: number, cnpj: string) {
+  return useQuery(['invoices', page, cnpj], () => getInvoices(page, pageSize, cnpj), {
   staleTime: 1000 * 10 // 10 seconds
  })
 }
