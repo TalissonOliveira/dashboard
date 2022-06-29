@@ -1,0 +1,27 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  gap: .5rem;
+  font-size: 1rem;
+
+  button {
+    background: none;
+    color: var(--blue-500);
+    height: 1.5rem;
+    width: 1.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--blue-500);
+    border-radius: .2rem;
+
+    &:disabled {
+      background-color: var(--blue-500);
+      color: var(--white);
+    }
+  }
+}
