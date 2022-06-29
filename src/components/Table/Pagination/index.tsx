@@ -1,3 +1,4 @@
+import { CustomSelect } from '../../Select'
 import { PaginationItem } from './PaginationItem'
 
 import styles from './styles.module.scss'
@@ -6,8 +7,15 @@ interface PaginationProps {
   totalCountOfRegisters: number
   registersPerPage?: number
   currentPage?: number
+  setRegistersPerPage: (pagesize: number) => void
   onPageChange: (page: number) => void
 }
+
+const pageOptions = [
+  { value: 5, label: '5' },
+  { value: 10, label: '10' },
+  { value: 15, label: '15' }
+]
 
 const siblingsCount = 1
 
@@ -22,6 +30,7 @@ function generatePagesArray(from: number, to: number) {
 export default function Pagination({
   totalCountOfRegisters,
   onPageChange,
+  setRegistersPerPage,
   currentPage = 1,
   registersPerPage = 5
 }: PaginationProps) {
@@ -35,18 +44,18 @@ export default function Pagination({
     ? generatePagesArray(currentPage, Math.min(currentPage + siblingsCount, lastPage))
     : []
 
+  function handleChangePageSize(event) {
+    setRegistersPerPage(event.value)
+    console.log(event)
+  }
+
   return (
     <div className={styles.pagination}>
-      <span>
-        Página{' '}
-        <strong>
-          {currentPage}{' '}
-        </strong>
-        de{' '}
-        <strong>
-          {lastPage}
-        </strong>
-      </span>
+      <CustomSelect
+        defaultValue={{ label: registersPerPage, value: registersPerPage }}
+        options={pageOptions}
+        onChange={handleChangePageSize}
+      />
 
       <div className={styles.pagination}>
         {currentPage > (1 + siblingsCount) && (

@@ -18,6 +18,8 @@ interface TableProps extends UseTableOptions<{}> {
   tableHooks: PluginHook<{}>
   filter?: string
   filters?: string[]
+  pageSize?: number
+  setPageSize: (pageSize: number) => void
   setCurrentPage: (page: number) => void
 }
 
@@ -29,7 +31,9 @@ export function Table({
   filter,
   filters,
   currentPage,
-  setCurrentPage
+  setCurrentPage,
+  pageSize,
+  setPageSize
 }: TableProps) {
   const ourGlobalFilterFunction = useCallback((rows: Row<object>[], ids, query: string) => {
     return matchSorter(rows, query, {
@@ -52,9 +56,7 @@ export function Table({
     headerGroups,
     page,
     prepareRow,
-    setGlobalFilter,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    setGlobalFilter
   } = tableInstance
 
   useEffect(() => {
@@ -101,6 +103,8 @@ export function Table({
         <Pagination
           totalCountOfRegisters={totalCountOfRegisters}
           currentPage={currentPage}
+          setRegistersPerPage={setPageSize}
+          registersPerPage={pageSize}
           onPageChange={setCurrentPage}
         />
       </div>
