@@ -3,6 +3,7 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { MdLock } from 'react-icons/md'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { api } from '../../services/api'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
@@ -33,6 +34,8 @@ export  function Profile() {
   }} = useForm<ChangePasswordFormData>({
     resolver: yupResolver(signInFormSchema)
   })
+
+  useDocumentTitle('Perfil')
 
   const changePassword = useMutation(async (values: ChangePasswordFormData) => {
     await api.post('/AlterarSenha', {

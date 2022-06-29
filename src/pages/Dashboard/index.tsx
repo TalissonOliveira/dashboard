@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useQueryClient } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
 import { FaSearch } from 'react-icons/fa'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { Loader } from '../../components/Loader'
 import { CustomSelect } from '../../components/Select'
 import { Table } from '../../components/Table'
 import { useClients } from '../../services/hooks/useClients'
 import { useInvoices } from '../../services/hooks/useInvoices'
+import { Empty } from '../../components/Empty'
 
 import styles from './styles.module.scss'
-import { Empty } from '../../components/Empty'
 
 type InvoiceTypes = 'Pendente' | 'Vencido' | 'Pago' | 'Fatura'
 
@@ -29,6 +29,8 @@ export function Dashboard() {
   const { data, isLoading, isFetching, refetch } = useInvoices(currentPage, pageSize, cnpj)
   const queryClient = useQueryClient()
 
+  useDocumentTitle('Faturas')
+
   useEffect(() => {
     setCurrentPage(1)
     refetch()
@@ -39,7 +41,9 @@ export function Dashboard() {
   }, [pageSize])
 
   useEffect(() => {
-    setCnpj(clients?.clientes[0].cnpj)
+    if (clients?.clientes) {
+      setCnpj(clients?.clientes[0].cnpj)
+    }
   }, [clients])
 
   const columns: Array<any> = useMemo(
@@ -86,7 +90,7 @@ export function Dashboard() {
     invoice.invoiceTypes.includes(typeFilter)
   )
   
-  const companyOptions = clients?.clientes.map(client => ({
+  const companyOptions = clients?.clientes?.map(client => ({
     value: client.cnpj,
     label: client.name
   }))
@@ -101,7 +105,6 @@ export function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <ReactQueryDevtools />
       <div>
         <h2>Minhas faturas</h2>
         {!isLoading && isFetching && <Loader size="small" />}
