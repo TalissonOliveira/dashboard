@@ -1,0 +1,66 @@
+.container {
+  width: 100%;
+  overflow-x: auto;
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  & {
+    scrollbar-width: thin;
+    scrollbar-color: var(--blue-50) var(--white);
+  }
+
+  /* Chrome, Edge, and Safari */
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--white);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--blue-50);
+    border-radius: 10px;
+  }
+}
+
+.table {
+  border-spacing: 0 0.5rem;
+
+  color: var(--blue-300);
+  width: 100%;
+  min-height: 20.5rem;
+  border-spacing: 0;
+  font-size: 1rem;
+
+  margin-top: 0.5rem;
+  border: 1px solid #dbe6fd;
+  border-radius: 5px;
+
+  tbody {
+    width: 100%;
+  }
+
+  th {
+    background: var(--blue-50);
+    color: var(--blue-300);
+    text-align: left;
+    font-weight: 600;
+    padding: 1rem 2rem;
+
+    &:first-child {
+      border-top-left-radius: 0.25rem;
+    }
+
+    &:last-child {
+      border-top-right-radius: 0.25rem;
+    }
+  }
+
+  td {
+    padding: 1rem 2rem;
+
+    border-bottom: 1px solid var(--blue-50);
+  }
+}
