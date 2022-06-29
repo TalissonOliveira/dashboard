@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 
 faker.locale = 'pt_BR'
 
-type InvoiceTypes = 'À Vencer' | 'Vencido' | 'Pago' | 'Fatura'
+type InvoiceTypes = 'Pendente' | 'Vencido' | 'Pago' | 'Fatura'
 
 interface Invoice {
   client: string
@@ -13,7 +13,12 @@ interface Invoice {
   invoice_types: InvoiceTypes[]
 }
 
-const invoiceTypes = ['Pendente', 'Vencido', 'Pago', 'Fatura']
+interface Client {
+  cnpj: string
+  name: string
+}
+
+const invoiceTypes: InvoiceTypes[] = ['Pendente', 'Vencido', 'Pago', 'Fatura']
 
 function generateRandomInvoiceTypes() {
   const quantity = Math.random() * 2
@@ -34,7 +39,8 @@ function generateRandomInvoiceTypes() {
 export function makeServer() {
   const server = createServer({
     models: {
-      invoice: Model.extend<Partial<Invoice>>({})
+      invoice: Model.extend<Partial<Invoice>>({}),
+      cliente: Model.extend<Partial<Client>>({}),
     },
     factories: {
       invoice: Factory.extend({
@@ -53,17 +59,26 @@ export function makeServer() {
         invoiceTypes() {
           return generateRandomInvoiceTypes()
         }
+      }),
+      cliente: Factory.extend({
+        cnpj() {
+          return faker.random.numeric(14)
+        },
+        name(i: number) {
+          return `Empresa ${i + 1}`
+        }
       })
     },
     seeds(server) {
+      server.createList('cliente', 2),
       server.createList('invoice', 200)
     },
     routes() {
       this.namespace = 'api'
       // this.timing = 750
 
-      this.get('/invoices', function (schema, request) {
-        const { page = 1, per_page = 5 } = request.queryParams
+      this.get('/Faturas/cnpj/:cnpj/:page/:pageSize', function (schema, request) {
+        const { page = 1, pageSize: per_page = 5 } = request.params
 
         const total = schema.all('invoice').length
 
@@ -79,6 +94,7 @@ export function makeServer() {
           { invoices }
         )
       })
+      this.get('/Cliente')
 
       this.namespace = ''
       this.passthrough()
