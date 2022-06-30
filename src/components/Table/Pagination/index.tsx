@@ -46,7 +46,6 @@ export default function Pagination({
 
   function handleChangePageSize(event) {
     setRegistersPerPage(event.value)
-    console.log(event)
   }
 
   return (

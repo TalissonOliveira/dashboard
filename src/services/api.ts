@@ -7,4 +7,8 @@ export const api = axios.create({
   headers: {
     Authorization: `Bearer ${token}`
   }
+}
+)
+export const apiAuth= axios.create({
+  baseURL: 'https://reqres.in/api'
 })

@@ -76,8 +76,8 @@ export function Dashboard() {
         Header: 'Opções',
         minWidth: '13rem',
         Cell: ({ row }) => (
-          row.original.invoiceTypes.map(invoiceType => (
-            <span className={styles.invoiceType}>
+          row.original.invoiceTypes.map((invoiceType, index)=> (
+            <span key={index} className={styles.invoiceType}>
               {invoiceType}
             </span>
           ))

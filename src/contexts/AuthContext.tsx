@@ -1,7 +1,8 @@
+import axios from 'axios'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { api } from '../services/api'
+import { api, apiAuth } from '../services/api'
 
 interface User {
   email: string
@@ -34,11 +35,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user
 
   useEffect(() => {
-    console.log(isAuthenticated)
-  }, [isAuthenticated])
-  
-
-  useEffect(() => {
     const recoveredUser = localStorage.getItem('dashboard:user')
 
     if (recoveredUser) {
@@ -50,20 +46,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
-      const response = await api.post('/login', {
+      apiAuth.post('/login', {
         email,
         password
-      })
-
-      const { token, user } = response.data
+      }).then(response => console.log('logged'))
+      // const { token } = response.data
 
       setUser(user || { email })
-      localStorage.setItem('dashboard:token', token)
+      // localStorage.setItem('dashboard:token', token)
       localStorage.setItem('dashboard:user', JSON.stringify(user || {
         email
       }))
 
-      api.defaults.headers['Authorization'] = `Bearer ${token}`
+      // api.defaults.headers['Authorization'] = `Bearer ${token}`
 
       toast.dismiss()
       navigate('/dashboard')
