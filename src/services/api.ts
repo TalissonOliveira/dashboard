@@ -9,6 +9,3 @@ export const api = axios.create({
   }
 }
 )
-export const apiAuth= axios.create({
-  baseURL: 'https://reqres.in/api'
-})

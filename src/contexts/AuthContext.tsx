@@ -1,8 +1,7 @@
-import axios from 'axios'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { api, apiAuth } from '../services/api'
+import { api } from '../services/api'
 
 interface User {
   email: string
@@ -46,19 +45,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
-      apiAuth.post('/login', {
+      const response = await api.post('/Login', {
         email,
         password
-      }).then(response => console.log('logged'))
-      // const { token } = response.data
+      })
+
+      const { token, user } = response.data
 
       setUser(user || { email })
-      // localStorage.setItem('dashboard:token', token)
+      localStorage.setItem('dashboard:token', token)
       localStorage.setItem('dashboard:user', JSON.stringify(user || {
         email
       }))
 
-      // api.defaults.headers['Authorization'] = `Bearer ${token}`
+      api.defaults.headers['Authorization'] = `Bearer ${token}`
 
       toast.dismiss()
       navigate('/dashboard')
