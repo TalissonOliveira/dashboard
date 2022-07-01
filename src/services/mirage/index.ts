@@ -96,8 +96,8 @@ export function makeServer() {
       })
       this.get('/Cliente')
 
-      this.namespace = ''
-      this.passthrough()
+      // this.namespace = ''
+      this.passthrough('https://reqres.in/api/**')
     }
   })
 

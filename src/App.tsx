@@ -10,9 +10,9 @@ import './styles/global.scss'
 
 const queryClient = new QueryClient()
 
-if (process.env.NODE_ENV === 'development') {
+// if (process.env.NODE_ENV === 'development') {
   makeServer()
-}
+// }
 
 function App() {
   return (
